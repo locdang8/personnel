@@ -1,0 +1,38 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="relative_view_tree">
+		  	<field name="name">Thân nhân</field>
+		  	<field name="model">relative.class</field>
+		  	<field name="arch" type="xml">
+		  		<tree multi_edit="1" sample="1" editable="bottom">
+		  			<field name="personnel_id"/>
+		  			<field name="name"/>
+		  			<field name="relationship"/>
+		  			<field name="phone_number"/>
+		  			<button name="filter" string="loc" type="object"/>
+		  		</tree>
+		  	</field>
+	  </record>
+	  <record id="personnel_ex_view" model="ir.ui.view" >
+	  	<field name="name">View exx</field>
+	  	<field name="model">personnel_type.class</field>
+	  	<field name="inherit_id" ref="nhansu.personnel_type_view_form"/>
+	  	<field name="arch" type="xml">
+	  		<xpath expr="//field[@name='gender']" position="after">
+	  			<field name="numbers"/>
+	  		</xpath>
+	  	</field>
+	  </record>	  
+	  
+	  
+	  
+	  <act_window
+		   id="relation_action"
+		   name="Thannhan"
+		   res_model="relative.class"
+		   view_mode="tree"
+		   domain="[]"
+		   limit="5"/>
+	<menuitem name="Thân nhân" id="relaltion_menu" parent="menu_ns" action="relation_action"/>	  
+	</data>
+</odoo>

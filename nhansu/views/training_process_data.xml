@@ -1,0 +1,131 @@
+<odoo>
+  <data>
+  
+  <record model="ir.ui.view" id="traningprocess_view_tree">
+  	<field name="name">Quá trình</field>
+  	<field name="model">process.class</field>
+  	<field name="arch" type="xml">
+  		<tree multi_edit="1" sample="1" editable="bottom" decoration-info="training_type=='online'" decoration-danger="training_type=='offline'">
+  			<field name="person_type_id"/>
+  			<field name="date_start"/>
+  			<field name="duration"/>
+  			<field name="date_stop"/>
+  			<field name="training_type" 
+  			decoration-info="training_type=='online'" decoration-danger="training_type=='offline'"
+  			 widget="badge"/>
+  		</tree>
+  	</field>
+  </record>
+  
+  <record model="ir.ui.view" id="traningprocess_view_graph">
+  	<field name="name">Quá trình</field>
+  	<field name="model">process.class</field>
+  	<field name="arch" type="xml">
+  		<graph type="bar">
+  			<field name="person_type_id" />
+  			<field name="date_start"/>
+  			<field name="duration"/>
+  			<!-- <field name="date_stop"/> -->
+  			<field name="training_type"/>
+  		</graph>
+  	</field>
+  </record>
+  
+  <record model="ir.ui.view" id="traningprocess_view_pivot">
+  	<field name="name">Quá trình</field>
+  	<field name="model">process.class</field>
+  	<field name="arch" type="xml">
+  		<pivot>
+  			<field name="person_type_id" invisible="1"/>
+  			<field name="date_start"/>
+  			<field name="duration"/>
+  			<!-- <field name="date_stop"/> -->
+  			<field name="training_type"/>
+  		</pivot>
+  	</field>
+  </record>
+  
+ <record model="ir.ui.view" id="traningprocess_view_kanban">
+  	<field name="name">Quá trình</field>
+  	<field name="model">process.class</field>
+  	<field name="arch" type="xml">
+  		<kanban default_group_by="person_type_id">
+	  		<templates>
+	            <t t-name="kanban-box">
+	               <div class="oe_kanban_card oe_kanban_global_click">
+	               		<ul>
+	               			<li>
+					  			<field name="person_type_id"/>
+	               			</li>
+	               			<li>
+					  			<field name="date_start"/>
+	               			</li>
+	               			<li>
+					  			<field name="duration"/>
+	               			</li>
+	               			<li>
+					  			<field name="training_type"/>       
+	               			</li>
+	               		</ul>
+			  			<!-- <field name="date_stop"/> -->
+	               </div>
+	            </t>
+	         </templates>
+  		</kanban>
+  	</field>
+ </record>
+ 
+   <record model="ir.ui.view" id="traningprocess_view_calendar">
+  	<field name="name">Quá trình</field>
+  	<field name="model">process.class</field>
+  	<field name="arch" type="xml">
+  		<calendar date_start="date_start" color="person_type_id">
+	  			<field name="name"/>
+	  			<field name="date_stop"/>
+	  			<field name="training_type"/>
+  		</calendar>
+  	</field>
+  </record>
+  
+  <record model="ir.ui.view" id="trainingprocess_view_form">
+  	<field name="name">Quá trình</field>
+  	<field name="model">process.class</field>
+  	<field name="arch" type="xml">
+  		<form>
+  			<title></title>
+  			<sheet>
+	  			<group>
+			  		<group>
+			  			<field name="person_type_id"/>
+			  			<field name="date_start"/>
+			  			<field name="duration"/>
+			  		</group>
+		  			<group>
+			  			<field name="date_stop"/>
+  						<field name="training_type"/>
+		  			</group>
+	  			</group>
+  			</sheet>
+  		</form>
+  	</field>
+  </record>
+  
+
+	   
+	<record id="trainingprocess_action" model="ir.actions.act_window">
+		<field name="name">Quá trình</field>
+		<field name="res_model">process.class</field>
+		<field name="view_mode">kanban,form,calendar,graph,pivot</field>
+		<field name="help" type="xml">
+			<p class="o_view_nocontent_smiling_face">
+				Tạo bản ghi mới
+			</p>
+		</field>
+	</record>
+	
+    <!-- Top menu item -->
+
+    <menuitem name="Quan ly" id="menu_root"/>
+	<menuitem name="Quá trình đào tạo" id="menu_qt" parent="menu_root" action="trainingprocess_action"/>
+  </data>
+</odoo>

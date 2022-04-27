@@ -1,0 +1,41 @@
+<odoo>
+	<data>
+		<!-- window action-->
+		
+		<!-- server action -->
+		<record id="personnel_action_done_server"
+			model="ir.actions.server">
+			<field name="name">Set done</field>
+			<field name="model_id" ref="nhansu.model_personnel_type_class" />
+			<field name="binding_model_id" ref="nhansu.model_personnel_type_class"/>
+			<field name="binding_view_types">list,form</field>
+			<field name="state">code</field>
+			<field name="code">
+				action=records.set_done()
+			</field>
+		</record>
+
+		<record id="personnel_action_cancel_server"
+			model="ir.actions.server">
+			<field name="name">Set cancel</field>
+			<field name="model_id" ref="nhansu.model_personnel_type_class"/>
+			<field name="binding_model_id" ref="nhansu.model_personnel_type_class"/>
+			<field name="binding_view_types">list,form</field>
+			<field name="state">code</field>
+			<field name="code">
+				action=records.set_cancel()
+			</field>
+		</record>
+
+		<record id="person_action_create" model="ir.actions.server">
+			<field name="name">Create</field>
+			<field name="model_id" ref="model_personnel_type_class"/>
+			<field name="binding_model_id" ref="model_personnel_type_class"/>
+			<field name="binding_view_types">list,form</field>
+			<field name="state">code</field>
+			<field name="code">
+				action=records.create_re()
+			</field>
+		</record>
+	</data>
+</odoo>

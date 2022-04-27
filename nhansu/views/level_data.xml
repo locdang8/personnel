@@ -1,0 +1,45 @@
+<odoo>
+  <data>
+  
+  <record model="ir.ui.view" id="level_view_tree">
+  	<field name="name">level</field>
+  	<field name="model">level.class</field>
+  	<field name="arch" type="xml">
+  		<tree>
+  			<field name="name"/>
+  			<field name="detail"/>
+  		</tree>
+  	</field>
+  </record>
+  
+  <record model="ir.ui.view" id="level_view_form">
+  	<field name="name">level</field>
+  	<field name="model">level.class</field>
+  	<field name="arch" type="xml">
+  		<form>
+  			<sheet>
+
+  				<group>
+		  			<field name="name"/>
+		  			<field name="detail"/>
+  				</group>
+  			</sheet>
+  		</form>
+  	</field>
+  </record>
+  
+	<act_window
+	   id="level_action"
+	   name="Trinh do hoc van"
+	   res_model="level.class"
+	   view_mode="tree,form"
+	   domain="[]"
+	   limit="5"/>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="Quan ly" id="menu_root"/>
+	<menuitem name="Trinh do hoc van" id="menu_level" parent="menu_root" action="level_action"/>
+  </data>
+</odoo>

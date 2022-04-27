@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_department_user,department_user,model_department_class,nhansu.group_department_user,1,0,0,0
+access_department_admin,department_admin,model_department_class,nhansu.group_department_admin,1,1,1,1
+access_level_user,level_user,model_level_class,nhansu.group_level_user,1,0,0,0
+access_level_admin,level_admin,model_level_class,nhansu.group_level_admin,1,1,1,1
+access_personnel_user,personnel_type_user,model_personnel_type_class,nhansu.group_personnel_type_user,1,0,0,0
+access_personnel_admin,personnel_type_admin,model_personnel_type_class,nhansu.group_personnel_type_admin,1,1,1,1
+access_process_user,process_user,model_process_class,nhansu.group_process_user,1,0,0,0
+access_process_admin,process_admin,model_process_class,nhansu.group_process_admin,1,1,1,1

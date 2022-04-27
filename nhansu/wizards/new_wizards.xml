@@ -1,0 +1,25 @@
+<odoo>
+	<data>
+		<record id="wizard_view_tree">
+			<field name="name">W tree</field>
+			<field name="model">wirazd_new.class</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="date"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="wizard_view_tree">
+			<field name="name">W form</field>
+			<field name="model">wirazd_new.class</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="date"/>
+				</tree>
+		</field>
+		</record>
+	</data>
+</odoo>

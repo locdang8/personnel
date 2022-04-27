@@ -1,0 +1,173 @@
+<odoo>
+	<data>
+
+		<record model="ir.ui.view" id="personnel_type_view_tree">
+			<field name="name">Nhân sự</field>
+			<field name="model">personnel_type.class</field>
+			<field name="arch" type="xml">
+				<tree multi_edit="1" sample="1" decoration-info="state=='done'"
+					decoration-danger="state=='cancel'"
+					decoration-warning = "state == 'draft'">
+					<field name="department_id" invisible="1" />
+					<field name="status" />
+					<field name="level_id" />
+					<field name="name" />
+					<field name="phone_number" optional="hide"/>
+					<field name="email" optional="hide"/>
+					<field name="state" 
+					decoration-danger ="state =='cancel'"
+					decoration-info = "state == 'done'"
+					decoration-warning = "state == 'draft'"					
+					widget="badge"/>
+					<field name="pays" optional="show"/>
+					<field name="gender"/>
+					<button name="set_confirm" string="Confirm"/>
+				</tree>
+			</field>
+		</record>
+		
+		
+		<record id="personnel_view_search" model="ir.ui.view">
+			<field name="name">Search</field>
+			<field name="model">personnel_type.class</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="email" />
+					<filter name="status" string="Nhân viên chính thức"
+						domain="[('status','=',True)]" />
+					<group>
+						<filter name="state" string="Nhóm theo trạng thái"
+							context="{'group_by':'gender'}">
+						</filter>
+					</group>
+				</search>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="personnel_type_view_kanban">
+			<field name="name">Nhân sự</field>
+			<field name="model">personnel_type.class</field>
+			<field name="arch" type="xml">
+				<kanban>
+					<field name="status" />
+					<field name="level_id" />
+					<field name="name" />
+					<field name="phone_number" />
+					<field name="email" />
+					<field name="state" />
+					<field name="pays" />
+					<templates>
+						<t t-name="kanban-box">
+							<div t-attf-class="oe_kanban_global_click">
+								<div class="row">
+									<div class="col-6">
+										<strong>
+											<t t-esc="record.name.value"/>
+										</strong>
+										<br/>
+										<span>
+											<span>Phone: </span>
+											<t t-esc="record.phone_number.value"/>
+										</span>
+										<br/>
+										<span>
+											<t t-esc="record.email.value"/>
+										</span>
+									</div>
+									<div class="col-6" style="width:100px; height:150px">
+										<field name="img_ns" widget="image" height="130" style="object-fit:cover" class="rounder"/>
+									</div>
+								</div>
+							</div>
+						</t>
+					</templates>
+				</kanban>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="personnel_type_view_form">
+			<field name="name">Nhân sự</field>
+			<field name="model">personnel_type.class</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<button id="button_confirm" name="set_confirm" string="Confirm" 
+						confirm="Do you want confirm" type="object" class="oe_highlight" states="draft"/>
+						<button id="button_done" name="set_done" string="Mark as Done"
+						confirm="Do you want done" type="object" class="oe_highlight" states="confirm"/>
+						<button id="button_draft" name="set_draft" string="Draft" 
+						confirm="Do you want draft" type="object" class="oe_highlight" states="cancel"/>
+						<button id="button_cancel" name="set_cancel" string="Cancel" 
+						confirm="Do you want cancel" type="object" states="draft,done,confirm"/>
+						<field name="state" widget="statusbar"
+							statusbar_visible="draft,done,confirm" />
+					</header>
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="action_person_count" type="object" icon="fa-user">
+                           			<field name="count_person" widget="statinfo"/>
+                           	</button>
+                           	<button class="oe_stat_button" name="action_process_count" type="object" icon="fa-archive">
+                           			<field name="count_process" widget="statinfo"/>
+                           	</button>
+                        </div>
+							<div class="oe_title">
+								<h1>
+										<field name="name" />
+								</h1>
+							</div>
+						<field name="img_ns" widget="image" width="100" height="200"
+							class="oe_right" />
+						<group>
+							<group>
+								<!-- <field name="level_id"/> -->
+								<field name="year_birth" />
+							</group>
+							<group>
+								<!-- <field name="department_id"/> -->
+								<field name="level_id" />
+								<field name="phone_number" />
+								<field name="email" placeholder="@xyz.com" />
+								<field name="date_start" />
+								<field name="gender" />
+							</group>
+							<notebook>
+								<page string="Lương">
+									<group class="row">
+										<group>
+											<field name="status" />
+											<field name="currency_id" />
+											<field name="pay" />
+											<field name="bonus" />
+										</group>
+										<group>
+											<field name="pays" />
+										</group>
+									</group>
+								</page>
+								<page string="Các khóa học">
+									<field name="process_id" />
+								</page>
+							</notebook>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="personnel_type_action" model="ir.actions.act_window">
+			<field name="name">Nhan su</field>
+			<field name="res_model">personnel_type.class</field>
+			<field name="view_mode">kanban,tree,form</field>
+			<field name="limit">5</field>
+			<field name="context">{'search_default_state':1}</field>
+			<field name="help">Thông tin về nhân viên</field>
+		</record>
+
+
+
+		<menuitem name="Quan ly" id="menu_root" />
+		<menuitem name="Nhân sự" id="menu_ns" parent="menu_root"/>
+		<menuitem name="Nhân sự" parent="menu_ns" id="menu_ns_type" action="personnel_type_action"/>
+	</data>
+</odoo>

@@ -1,0 +1,67 @@
+<odoo>
+  <data>
+  
+  <record model="ir.ui.view" id="personnel_view_tree">
+  	<field name="name">Nhân sự</field>
+  	<field name="model">personnel.class</field>
+  	<field name="arch" type="xml">
+  		<tree editable="bottom" multi_edit="1" >
+  			<field name="department_id"/>
+  			<field name="status"/>
+  			<field name="level_id"/>
+  			<field name="fullname"/>
+  			<field name="phone_number"/>
+  			<field name="email"/>
+  		</tree>
+  	</field>
+  </record>
+  
+  <record model="ir.ui.view" id="personnel_view_form">
+  	<field name="name">Nhân sự</field>
+  	<field name="model">personnel.class</field>
+  	<field name="arch" type="xml">
+  		<form>
+  			<sheet>
+	  			<field name="img_ns" widget="image" width="200" class="oe_right"/>
+	  			<group>
+					<group>
+			  			<field name="status"/>
+			  			<!-- <field name="level_id"/> -->
+		  				<field name="name"/>
+					</group>
+		  			<group>
+<!-- 			  			<field name="department_id"/> -->
+			  			<field name="phone_number"/>
+			  			<field name="email"/>
+			  			<field name="date_start"/>
+		  			</group>
+		  			<notebook>
+		  				<page>
+		  				</page>
+		  				<page string="Các khóa học">
+		  					<field name="process_id"/>
+		  				</page>
+		  			</notebook>
+	  			</group>
+  			</sheet>
+  		</form>
+  	</field>
+  </record>
+  
+    
+	<act_window
+	   id="personnel_action"
+	   name="Nhân sự"
+	   res_model="personnel.class"
+	   view_mode="tree,form"
+	   domain="[]"
+	   limit="5"/>
+<!-- 
+
+
+    Top menu item
+
+    <menuitem name="Quan ly" id="menu_root"/>
+	<menuitem name="Nhan su" id="menu_ns" parent="menu_root" action="personnel_action"/> -->
+  </data>
+</odoo>

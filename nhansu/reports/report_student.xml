@@ -2,8 +2,31 @@
 	<data>
 		<template id="report_session_view">
 			<t t-call="web.html_container">
-		    <t t-foreach="docs" t-as="o">
+		    <t t-foreach="docs" t-as="doc">
 		        <t t-call="web.external_layout">
+		        	<div class="page">
+			        	<h1>Nhân viên <t t-esc="doc.name"/></h1>
+	                        <table class="table table-condensed">
+	                            <thead>
+	                                <tr>
+	                                    <th>Nhân viên</th>
+	                                    <th>Số điện thoại</th>
+	                                    <th>Email</th>
+	                                    <th>Giới tính</th>
+	                                    <th>Lương</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                                <tr>
+	                                    <td><t t-esc="doc.name"/></td>
+	                                    <td><t t-esc="doc.phone_number"/></td>
+	                                    <td><t t-esc="doc.email"/></td>
+	                                   	<td><t t-esc="doc.gender"/></td>
+	                                   	<td><t t-esc="doc.pays"/></td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+		        	</div>
 		        </t>
 		    </t>
 			</t>

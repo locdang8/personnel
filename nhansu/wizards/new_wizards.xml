@@ -1,25 +1,45 @@
 <odoo>
 	<data>
-		<record id="wizard_view_tree">
-			<field name="name">W tree</field>
-			<field name="model">wirazd_new.class</field>
+		<record id="wizard_view_form" model="ir.ui.view">
+			<field name="name">W form</field>
+			<field name="model">personnel.wizard</field>
 			<field name="arch" type="xml">
-				<tree>
-					<field name="name"/>
-					<field name="date"/>
-				</tree>
+				<form>
+					<field name="relative_ids"/>
+					<field name="personnel_ids"/>
+					
+						<button name="subscribe" string="subscribe" type="object"/>
+						<button special="cancel" string="cancel" type="object"/>
+					
+				</form>
 			</field>
 		</record>
 		
-		<record id="wizard_view_tree">
+		<record id="wizard_view_reason_form" model="ir.ui.view">
 			<field name="name">W form</field>
-			<field name="model">wirazd_new.class</field>
+			<field name="model">reason.wizard</field>
 			<field name="arch" type="xml">
-				<tree>
-					<field name="name"/>
-					<field name="date"/>
-				</tree>
-		</field>
+				<form>
+					<group>
+						<field name="reason"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		
+		<record id="view_action_wizard" model="ir.actions.act_window">
+			<field name="name">add wizards</field>
+			<field name="res_model">personnel.wizard</field>
+			<field name="binding_model_id" ref="nhansu.model_relative_class"></field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+		
+		<record id="view_action_reason_wizard" model="ir.actions.act_window">
+			<field name="name">add wizards</field>
+			<field name="res_model">reason.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
 		</record>
 	</data>
 </odoo>

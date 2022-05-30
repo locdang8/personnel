@@ -65,12 +65,26 @@
 			<field name="implied_ids" eval="[(4, ref('group_process_user'))]"/>
 		</record>
 	</data>
-	<data noupdate="0">
+	<data noupdate="1">
 		<record model="ir.rule" id="personnel_type_rule">
 	        <field name="name">Personnel type</field>
 	        <field name="model_id" ref="model_personnel_type_class"/>
+	        <field name="groups" eval="[4,ref('nhansu.group_personnel_type_admin')]"/>
 	        <field name="domain_force">[('status','=',True)]</field>
-	        <field name="perm_read" eval="0"/>
+	    </record>
+	    
+	    <record model="ir.rule" id="personnel_type_pf_rule">
+	        <field name="name">Personnel type</field>
+	        <field name="model_id" ref="model_personnel_type_class"/>
+	        <field name="groups" eval="[4,ref('nhansu.group_personnel_type_admin')]"/>
+	        <field name="domain_force">[('status','=',False)]</field>
+	        <field name="perm_read" eval="False"/>
+	    </record>
+	    
+	    <record id="department_class_ad_rule" model="ir.rule">
+	    	<field name="name">Departmet</field>
+	    	<field name="model_id" ref="model_department_class"/>
+	    	<field name="domain_force">[('phone_number','!=',False)]</field>
 	    </record>
 	</data>
 </odoo>

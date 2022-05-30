@@ -24,7 +24,7 @@
   		<graph type="bar">
   			<field name="person_type_id" />
   			<field name="date_start"/>
-  			<field name="duration"/>
+  			<field name="duration" type="col"/>
   			<!-- <field name="date_stop"/> -->
   			<field name="training_type"/>
   		</graph>
@@ -97,12 +97,21 @@
 	  			<group>
 			  		<group>
 			  			<field name="person_type_id"/>
+			  			<field name="name"/>
 			  			<field name="date_start"/>
 			  			<field name="duration"/>
+			  			<field name="model"/>
+			  			<field name="process_id"/>
+			  			<field name="ids"/>
+			  			<field name="img_1920" widget="image" class="oe_avatar"
+			  				 options="{'preview_image':'img_1920','zoom':true, 'zoom-delay':1000}"/>
+			  			
 			  		</group>
 		  			<group>
 			  			<field name="date_stop"/>
   						<field name="training_type"/>
+  						<field name="date_add"/>
+  						<button name="test_date" string="Test đi" type="object"/>
 		  			</group>
 	  			</group>
   			</sheet>
@@ -110,6 +119,17 @@
   	</field>
   </record>
   
+  <record id="process_search" model="ir.ui.view">
+  	<field name="name">View search</field>
+  	<field name="model">process.class</field>
+	<field name="arch" type="xml">
+		<search>
+			<group>
+				<filter name="duration" context="{'group_by':'training_type'}" string="Duration"/>
+			</group>
+		</search>
+	</field>
+  </record>
 
 	   
 	<record id="trainingprocess_action" model="ir.actions.act_window">
@@ -126,6 +146,6 @@
     <!-- Top menu item -->
 
     <menuitem name="Quan ly" id="menu_root"/>
-	<menuitem name="Quá trình đào tạo" id="menu_qt" parent="menu_root" action="trainingprocess_action"/>
+	<menuitem name="Quá trình đào tạo" id="menu_qt" parent="menu_root" action="trainingprocess_action" groups="nhansu.group_process_admin"/>
   </data>
 </odoo>

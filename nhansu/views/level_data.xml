@@ -22,24 +22,28 @@
   				<group>
 		  			<field name="name"/>
 		  			<field name="detail"/>
+		  			<field name="person_type_id"/>
   				</group>
   			</sheet>
   		</form>
   	</field>
   </record>
   
-	<act_window
-	   id="level_action"
-	   name="Trinh do hoc van"
-	   res_model="level.class"
-	   view_mode="tree,form"
-	   domain="[]"
-	   limit="5"/>
-
-
+	<record id="level_action" model="ir.actions.act_window">
+		<field name="name">Trinh do hoc van</field>
+		<field name="res_model">level.class</field>
+		<field name="view_mode">tree,form</field>
+		<field name="limit">5</field>
+		<field name="help" type="xml">
+			<p>
+				Tao moi
+			</p>
+		</field>
+	</record>
+	
     <!-- Top menu item -->
 
     <menuitem name="Quan ly" id="menu_root"/>
-	<menuitem name="Trinh do hoc van" id="menu_level" parent="menu_root" action="level_action"/>
+	<menuitem name="Trinh do hoc van" id="menu_level" parent="menu_root" action="level_action" groups="nhansu.group_level_admin"/>
   </data>
 </odoo>

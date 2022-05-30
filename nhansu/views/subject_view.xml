@@ -1,0 +1,33 @@
+<odoo>
+	<data>
+		<record id="subject_view_form" model="ir.ui.view">
+			<field name="name">Subject form</field>
+			<field name="model">subject.class</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<field name="subject_name"/>
+							<field name="date_start"/>
+							<field name="detail"/>
+							<field name="detail2"/>
+							<field name="test1"/>
+							<field name="test2"/>
+							<field name="test3"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record id="subject_action" model="ir.actions.act_window">
+			<field name="name">Act subject</field>
+			<field name="res_model">subject.class</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="xml">
+				<p>Tao ban ghi moi</p>
+			</field>
+		</record>
+		<menuitem id="menu_subject" name="Subject" parent="menu_root" action="subject_action" sequence="2"/>
+	</data>
+</odoo>

@@ -6,7 +6,7 @@
   	<field name="model">department.class</field>
   	<field name="arch" type="xml">
   		<tree>
-  			<field name="name"/>
+  			<field name="fullname"/>
   			<field name="phone_number"/>
   			<field name="address"/>
   		</tree>
@@ -19,7 +19,7 @@
   	<field name="arch" type="xml">
   		<search>
   			<field name="address"/>
-  			<filter name="name" string="Sx theo ten" domain="[('name','ilike','tai')]"/>
+  			<filter name="fullname" string="Sx theo ten" domain="[('fullname','ilike','tai')]"/>
   			<group expand="1" string="Sap xep theo">
   				<filter name="address_ser" string="ten" context="{'group_by':'address'}"></filter>
   			</group>
@@ -36,51 +36,46 @@
     					<button class="oe_stat_button" type="object" name="action_count_number" icon="fa-user">
         					<field string="Phòng" name="department_count" widget="statinfo"/>
     					</button>
+    					<button class="oe_stat_button" type="object" name="action_cout_person" icon="fa-user">
+    						<field string="Nhân viên" name="person_count" widget="statinfo"/>
+    					</button>
 					</div>
 					
 	  				<notebook>
 	  					<page string="Phòng ban">
 			  				<group>
-					  			<field name="name"/>
+					  			<field name="fullname"/>
 					  			<field name="phone_number"/>
-					  			<field name="address"/>  					
-		  						<field name="person_id" widget="many2many_tags">
-		  							<tree>
-		  								<field name="name"/>
-		  								<field name="gender"/>
-		  								<field name="year_birth"/>
-		  								<field name="level_id"/>
-		  							</tree>
-		  						</field>
+					  			<field name="address"/>
+					  			<field name="person_id"/>					
 			  				</group>  						
-	  					</page>
-	  					<page string="Nhân viên">
 	  					</page>
 	  				</notebook>
   			</sheet>
   		</form>
   	</field>
   </record>
-	<act_window
-	   id="department_action"
-	   name="Phong ban"
-	   res_model="department.class"
-	   view_mode="tree,form"
-	   domain="[]"
-	   limit="5"/>
+
+	<record id="department_action" model="ir.actions.act_window">
+		<field name="name">Phong ban</field>
+		<field name="res_model">department.class</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'default_search_address':1}</field>
+	</record>
 
 	<record id="action_set_department" model="ir.actions.server">
         	<field name="name">Set Department Person</field>
         	<field name="model_id" ref="nhansu.model_department_class"/>
+        	<field name="binding_model_id" ref="nhansu.model_department_class"/>
+        	<field name="binding_view_types">list,form</field>
         	<field name="state">code</field>
         	<field name="code">
-                records.create_record()
+                action=records.create_record()
         	</field>
 	</record>
 
     <!-- Top menu item -->
 
-    <menuitem name="Quan ly" id="menu_root"/>
-	<menuitem name="Phong ban" id="menu_pb" parent="menu_root" action="department_action"/>
+	<menuitem name="Phong ban" id="menu_pb" parent="menu_root" action="department_action" groups="nhansu.group_department_admin"/>
   </data>
 </odoo>

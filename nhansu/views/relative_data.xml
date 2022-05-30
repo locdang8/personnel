@@ -1,38 +1,77 @@
 <odoo>
 	<data>
 		<record model="ir.ui.view" id="relative_view_tree">
-		  	<field name="name">Thân nhân</field>
-		  	<field name="model">relative.class</field>
-		  	<field name="arch" type="xml">
-		  		<tree multi_edit="1" sample="1" editable="bottom">
-		  			<field name="personnel_id"/>
-		  			<field name="name"/>
-		  			<field name="relationship"/>
-		  			<field name="phone_number"/>
-		  			<button name="filter" string="loc" type="object"/>
-		  		</tree>
-		  	</field>
-	  </record>
-	  <record id="personnel_ex_view" model="ir.ui.view" >
-	  	<field name="name">View exx</field>
-	  	<field name="model">personnel_type.class</field>
-	  	<field name="inherit_id" ref="nhansu.personnel_type_view_form"/>
-	  	<field name="arch" type="xml">
-	  		<xpath expr="//field[@name='gender']" position="after">
-	  			<field name="numbers"/>
-	  		</xpath>
-	  	</field>
-	  </record>	  
-	  
-	  
-	  
-	  <act_window
-		   id="relation_action"
-		   name="Thannhan"
-		   res_model="relative.class"
-		   view_mode="tree"
-		   domain="[]"
-		   limit="5"/>
-	<menuitem name="Thân nhân" id="relaltion_menu" parent="menu_ns" action="relation_action"/>	  
+			<field name="name">Thân nhân</field>
+			<field name="model">relative.class</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="personnel_id" />
+					<field name="name" />
+					<field name="relationship" />
+					<field name="phone_number" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="relative_form">
+			<field name="name">Thân nhân</field>
+			<field name="model">relative.class</field>
+			<field name="arch" type="xml">
+					<form>
+						<sheet>
+							<group>
+								<field name="personnel_id"/>
+								<field name="name"/>
+								<field name="relationship"/>
+								<field name="phone_number"/>
+							</group>
+						</sheet>
+					</form>
+			</field>
+		</record>
+
+		<record id="relative_search_view" model="ir.ui.view">
+			<field name="name">Search view</field>
+			<field name="model">relative.class</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="relationship"/>
+					<field name="personnel_id"/>
+					<filter name="relationship" string="bố" domain="[('relationship','=','father')]"/>
+					<filter name="relationship" string="mẹ" domain="[('relationship','=','mother')]"/>
+					<group string="Group by">
+						<filter name="relationship" string="Nhom theo quan he" context="{'group_by': 'relationship'}"/>
+					</group>
+					<searchpanel>
+						<field name="relationship"/>
+					</searchpanel>
+				</search>
+			</field>
+		</record>
+<!-- 		<record id="personnel_ex_view" model="ir.ui.view">
+			<field name="name">View exx</field>
+			<field name="model">personnel_type.class</field>
+			<field name="inherit_id" ref="nhansu.personnel_type_view_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='gender']" position="after">
+					<field name="numbers" />
+				</xpath>
+			</field>
+		</record> -->
+
+
+		<record id="relation_action" model="ir.actions.act_window">
+			<field name="name">THan nhan</field>
+			<field name="res_model">relative.class</field>
+			<field name="view_mode">tree,form</field>
+			<field name="limit">5</field>
+			<field name="help" type="xml">
+				<p>
+					Tao moi
+				</p>
+			</field>
+		</record>
+		<menuitem name="Thân nhân" id="relaltion_menu"
+			parent="menu_ns" action="relation_action" />
 	</data>
 </odoo>

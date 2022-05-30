@@ -7,3 +7,7 @@ access_personnel_user,personnel_type_user,model_personnel_type_class,nhansu.grou
 access_personnel_admin,personnel_type_admin,model_personnel_type_class,nhansu.group_personnel_type_admin,1,1,1,1
 access_process_user,process_user,model_process_class,nhansu.group_process_user,1,0,0,0
 access_process_admin,process_admin,model_process_class,nhansu.group_process_admin,1,1,1,1
+access_relative_user,process_user,model_relative_class,,1,0,0,0
+access_relative_admin,process_admin,model_relative_class,,1,1,1,1
+access_subject_admin,subject_admin,model_subject_class,,1,1,1,1
+access_reason_wizard_admin,process_admin,model_reason_wizard,,1,1,1,1

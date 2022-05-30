@@ -5,41 +5,53 @@
 			<field name="name">Nhân sự</field>
 			<field name="model">personnel_type.class</field>
 			<field name="arch" type="xml">
-				<tree multi_edit="1" sample="1" decoration-info="state=='done'"
+				<tree  multi_edit="1" sample="1"
+					decoration-info="state=='done'"
 					decoration-danger="state=='cancel'"
-					decoration-warning = "state == 'draft'">
-					<field name="department_id" invisible="1" />
-					<field name="status" />
-					<field name="level_id" />
+					decoration-warning="state == 'draft'">
+					<field name="department_id" />
+					<field name="status" optional="show" />
+					<field name="level_id" optional="hide" />
 					<field name="name" />
-					<field name="phone_number" optional="hide"/>
+					<field name="active" />
+					<field name="phone_number" optional="hide" />
 					<field name="email" optional="hide"/>
-					<field name="state" 
-					decoration-danger ="state =='cancel'"
-					decoration-info = "state == 'done'"
-					decoration-warning = "state == 'draft'"					
-					widget="badge"/>
-					<field name="pays" optional="show"/>
-					<field name="gender"/>
-					<button name="set_confirm" string="Confirm"/>
+					<field name="state" optional="show"
+						decoration-danger="state =='cancel'"
+						decoration-info="state == 'done'"
+						decoration-warning="state == 'draft'" widget="badge" />
+					<field name="pays" optional="show" />
+					<field name="gender" optional="hide" />
+					<field name="lifeskills" widget="progressbar" optional="hide" />
+					<field name="english" widget="progressbar" optional="hide" />
 				</tree>
 			</field>
 		</record>
-		
-		
+
+
 		<record id="personnel_view_search" model="ir.ui.view">
 			<field name="name">Search</field>
 			<field name="model">personnel_type.class</field>
 			<field name="arch" type="xml">
 				<search>
 					<field name="email" />
+					<field name="pays"/>
+					<field name="name"/>
 					<filter name="status" string="Nhân viên chính thức"
 						domain="[('status','=',True)]" />
-					<group>
-						<filter name="state" string="Nhóm theo trạng thái"
-							context="{'group_by':'gender'}">
+					<filter name="active" string="no active"
+						domain="[('active','=',False)]" />
+					<group expand='True'>
+						<filter name="department_id" string="Nhóm theo phòng ban"
+							context="{'group_by':'department_id'}">
 						</filter>
+						<filter name="gender" string="Giới tính"
+							context="{'group_by':'gender'}"/>
 					</group>
+					<searchpanel>
+						<field name="state" icon="fa-building" />
+						<field name="department_id" select="multi"/>
+					</searchpanel>
 				</search>
 			</field>
 		</record>
@@ -47,7 +59,7 @@
 			<field name="name">Nhân sự</field>
 			<field name="model">personnel_type.class</field>
 			<field name="arch" type="xml">
-				<kanban>
+				<kanban default_group_by="department_id">
 					<field name="status" />
 					<field name="level_id" />
 					<field name="name" />
@@ -57,24 +69,32 @@
 					<field name="pays" />
 					<templates>
 						<t t-name="kanban-box">
-							<div t-attf-class="oe_kanban_global_click">
+							<div
+								class="oe_kanban_global_click o_kanban_record_has_image_left">
 								<div class="row">
 									<div class="col-6">
 										<strong>
-											<t t-esc="record.name.value"/>
+											<t t-esc="record.name.value" />
 										</strong>
-										<br/>
+										<br />
 										<span>
 											<span>Phone: </span>
-											<t t-esc="record.phone_number.value"/>
+											<t t-esc="record.phone_number.value" />
 										</span>
-										<br/>
+										<br />
 										<span>
-											<t t-esc="record.email.value"/>
+											<t t-esc="record.email.value" />
+										</span>
+										<br />
+										<span>
+											<field name="state"
+												decoration-danger="state =='cancel'"
+												decoration-info="state == 'done'"
+												decoration-warning="state == 'draft'" widget="badge" />
 										</span>
 									</div>
 									<div class="col-6" style="width:100px; height:150px">
-										<field name="img_ns" widget="image" height="130" style="object-fit:cover" class="rounder"/>
+										<field name="img_ns" widget="image" height="130" />
 									</div>
 								</div>
 							</div>
@@ -90,37 +110,46 @@
 			<field name="arch" type="xml">
 				<form>
 					<header>
-						<button id="button_confirm" name="set_confirm" string="Confirm" 
-						confirm="Do you want confirm" type="object" class="oe_highlight" states="draft"/>
-						<button id="button_done" name="set_done" string="Mark as Done"
-						confirm="Do you want done" type="object" class="oe_highlight" states="confirm"/>
-						<button id="button_draft" name="set_draft" string="Draft" 
-						confirm="Do you want draft" type="object" class="oe_highlight" states="cancel"/>
-						<button id="button_cancel" name="set_cancel" string="Cancel" 
-						confirm="Do you want cancel" type="object" states="draft,done,confirm"/>
+						<button id="button_confirm" name="set_confirm"
+							string="Confirm" confirm="Do you want confirm" type="object"
+							class="oe_highlight" states="draft" />
+						<button id="button_done" name="set_done"
+							string="Mark as Done" confirm="Do you want done" type="object"
+							class="oe_highlight" states="confirm" />
+						<button id="button_draft" name="set_draft" string="Draft"
+							confirm="Do you want draft" type="object" class="oe_highlight"
+							states="cancel" />
+						<button id="button_cancel" name="set_cancel"
+							string="Cancel" confirm="Do you want cancel" type="object"
+							states="draft,done,confirm" />
 						<field name="state" widget="statusbar"
 							statusbar_visible="draft,done,confirm" />
 					</header>
 					<sheet>
 						<div class="oe_button_box" name="button_box">
-                            <button class="oe_stat_button" name="action_person_count" type="object" icon="fa-user">
-                           			<field name="count_person" widget="statinfo"/>
-                           	</button>
-                           	<button class="oe_stat_button" name="action_process_count" type="object" icon="fa-archive">
-                           			<field name="count_process" widget="statinfo"/>
-                           	</button>
-                        </div>
-							<div class="oe_title">
-								<h1>
-										<field name="name" />
-								</h1>
-							</div>
-						<field name="img_ns" widget="image" width="100" height="200"
-							class="oe_right" />
+							<button class="oe_stat_button" name="action_person_count"
+								type="object" icon="fa-user">
+								<field name="count_person" widget="statinfo" />
+							</button>
+<!-- 							<button class="oe_stat_button" name="action_process_count"
+								type="object" icon="fa-archive">
+								<field name="count_process" widget="statinfo" />
+							</button> -->
+						</div>
+						<div class="oe_title">
+							<h1>
+								<field name="name" />
+							</h1>
+						</div>
+						<field name="img_ns" widget="image"
+							option="{'preview_image':'img_ns','zoom':true,'zoom_delay':1000}"
+							class="oe_avatar" />
 						<group>
 							<group>
 								<!-- <field name="level_id"/> -->
 								<field name="year_birth" />
+							
+								<field name="department_id" />
 							</group>
 							<group>
 								<!-- <field name="department_id"/> -->
@@ -129,6 +158,12 @@
 								<field name="email" placeholder="@xyz.com" />
 								<field name="date_start" />
 								<field name="gender" />
+							</group>
+							<group>
+								<field name="lifeskills" widget="progressbar"
+									options="{'editable':true}" />
+								<field name="english" widget="progressbar"
+									options="{'editable':true}" />
 							</group>
 							<notebook>
 								<page string="Lương">
@@ -144,30 +179,79 @@
 										</group>
 									</group>
 								</page>
-								<page string="Các khóa học">
-									<field name="process_id" />
-								</page>
+								<!-- <page string="Các khóa học">
+									<field name="process_ids">
+										<tree>
+											<field name="person_type_id" />
+											<field name="date_start" />
+											<field name="duration" />
+											<field name="date_stop" />
+											<field name="training_type"
+												decoration-info="training_type=='online'"
+												decoration-danger="training_type=='offline'" widget="badge" />
+										</tree>
+									</field>
+								</page> -->
 							</notebook>
 						</group>
+						<footer>
+							<button id="action_view_wizard"
+								name="%(nhansu.view_action_reason_wizard)d" string="Xin nghỉ"
+								type="action" />
+							<button name="custom_btn" string="create record" type="object"/>
+						</footer>
 					</sheet>
 				</form>
 			</field>
 		</record>
 
+		<record id="personnel_type_view_calendar" model="ir.ui.view">
+			<field name="name">Calendar view</field>
+			<field name="model">personnel_type.class</field>
+			<field name="arch" type="xml">
+				<calendar date_start="date_start" color="id">
+					<field name="name" />
+					<field name="gender" />
+				</calendar>
+			</field>
+		</record>
 
-		<record id="personnel_type_action" model="ir.actions.act_window">
+		<record id="personnel_type_view_pivot" model="ir.ui.view">
+			<field name="name">Pivot view</field>
+			<field name="model">personnel_type.class</field>
+			<field name="arch" type="xml">
+				<pivot>
+					<field name="name" type="row" />
+					<field name="department_id" type="col" />
+				</pivot>
+			</field>
+		</record>
+
+		<record id="personnel_type_view_graph" model="ir.ui.view">
+			<field name="name">graph view</field>
+			<field name="model">personnel_type.class</field>
+			<field name="arch" type="xml">
+				<graph type="pie">
+					<field name="name" />
+					<field name="phone_number" />
+					<field name="email" />
+				</graph>
+			</field>
+		</record>
+		<record id="personnel_type_action"
+			model="ir.actions.act_window">
 			<field name="name">Nhan su</field>
 			<field name="res_model">personnel_type.class</field>
-			<field name="view_mode">kanban,tree,form</field>
-			<field name="limit">5</field>
-			<field name="context">{'search_default_state':1}</field>
+			<field name="view_mode">tree,kanban,form,calendar,graph,pivot</field>
+			<field name="limit">10</field>
+			<field name="context">{'search_default_state':0}</field>
 			<field name="help">Thông tin về nhân viên</field>
 		</record>
 
 
-
-		<menuitem name="Quan ly" id="menu_root" />
-		<menuitem name="Nhân sự" id="menu_ns" parent="menu_root"/>
-		<menuitem name="Nhân sự" parent="menu_ns" id="menu_ns_type" action="personnel_type_action"/>
+		<menuitem name="Nhân sự" id="menu_ns" parent="menu_root"
+			sequence="1" />
+		<menuitem name="Nhân sự" parent="menu_ns" id="menu_ns_type"
+			action="personnel_type_action" />
 	</data>
 </odoo>

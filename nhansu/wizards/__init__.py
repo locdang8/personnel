@@ -1,1 +1,1 @@
-from . import  new_wizards
+from . import  personnel_wizards, reason_wizard

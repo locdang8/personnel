@@ -1,0 +1,5 @@
+<odoo>
+	<data>
+		<menuitem name="Quan ly" id="menu_root"/>
+	</data>
+</odoo>
